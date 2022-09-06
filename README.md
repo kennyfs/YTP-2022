@@ -19,3 +19,8 @@
 * 爬蟲，收集文章，可能主要來自於新聞
 * 標記圖的工具，可能是app或網頁，因為需要標記大量的資料，必須做得很方便
 * AI，讀取文字後輸出圖，可能是用簡單的GraphRNN做監督式學習，或用其他我來沒看過的東西
+
+## 連結們
+
+https://www.python.org
+https://code.visualstudio.com
