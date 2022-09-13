@@ -1,10 +1,10 @@
 import requests as 要求
 from bs4 import BeautifulSoup as 美麗的湯
-取文字=要求.get
+取=要求.get
 印=print
 解析器='html.parser'
 
-網頁文字=取文字('https://peienwu.com/').text
+網頁文字=取('https://peienwu.com/').text
 湯=美麗的湯(網頁文字,解析器)
 #印(湯.prettify())
 #印(湯.title)
