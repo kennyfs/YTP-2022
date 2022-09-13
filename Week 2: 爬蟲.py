@@ -15,4 +15,4 @@ for 標籤 in a標籤:
     類別=標籤.get('class')
     if(類別!=['post-title-link']):
         continue
-    印(f'標題:{標題}，連結:{連結}')
+    印(f'標題:{標題}，連結:https://peienwu.com{連結}')
