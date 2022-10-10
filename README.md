@@ -46,10 +46,5 @@ https://news.ltn.com.tw/news/life/breakingnews/4084112
 https://ec.ltn.com.tw/article/breakingnews/4083708  
 前面網址說明類別，後面則是流水號  
   
-資料預處理流程：
-```mermaid
-graph TD;
-爬蟲收集資料-->Jeiba斷詞;
-Jeiba斷詞-->Tfidf找關鍵字;
-Tf-idf找關鍵字-->App或其他工具做圖的連接（標籤）;
-```
+資料預處理流程：  
+爬蟲收集資料->Jeiba斷詞->Tf-idf找關鍵字->App或其他工具做圖的連接（標籤）  
