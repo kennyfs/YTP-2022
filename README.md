@@ -32,3 +32,24 @@
 |---|---|---|
 |1|GitHub & VSCode 開發環境安裝與設定|**待補**|
 |2|爬蟲|[範例程式](https://github.com/kennychenfs/YTP-2022/blob/main/Week%202:%20%E7%88%AC%E8%9F%B2.py)|
+
+## Todo
+抓取新聞文字：  
+從新聞主頁擷取新聞的連結和標題，然後擷取個別的新聞，**只留下標題和內文，並整理好儲存在檔案**  
+或是直接用網址進到新聞內頁  
+目前找的新聞來源：  
+中央社，網址範例  
+https://www.cna.com.tw/news/aopl/202210010004.aspx  
+後面數字是yyyymmdd和四位數流水號  
+自由時報，網址範例  
+https://news.ltn.com.tw/news/life/breakingnews/4084112  
+https://ec.ltn.com.tw/article/breakingnews/4083708  
+前面網址說明類別，後面則是流水號  
+  
+資料預處理流程：
+```mermaid
+graph TD;
+爬蟲收集資料-->Jeiba斷詞;
+Jeiba斷詞-->Tfidf找關鍵字;
+Tf-idf找關鍵字-->App或其他工具做圖的連接（標籤）;
+```
