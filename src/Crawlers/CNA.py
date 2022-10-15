@@ -32,7 +32,7 @@ class CNACrawler:
         paragraphs = paragraphs.find_all("p")
         result = ""
         for paragraph in paragraphs:
-            result = paragraph.text.strip()
+            result += paragraph.text.strip()
         result=result[result.find('）')+1:result.rfind('（')]
         return result
 
