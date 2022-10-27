@@ -1,18 +1,22 @@
 import json
-from sklearn.feature_extraction.text import TfidfVectorizer
-import jieba
+from sklearn.feature_extraction.text import CountVectorizer,TfidfTransformer
+import jieba # ldkrsi/jieba-zh_TW for traditional Chinese
 data = json.loads(open('cna-category-aipl(example).json','r').read())
-texts = [" ".join(jieba.cut(v['text'], cut_all=False)) for k, v in data.items()]
-#print(texts)
-#以下不確定能不能動
-vectorizer = TfidfVectorizer(norm = None)
-tf_idf_scores = vectorizer.fit_transform(texts)
-# get vocabulary of terms
-feature_names = vectorizer.get_feature_names_out()
-corpus_index = [n for n in texts]
+texts = [" ".join(jieba.cut(v['text'], cut_all=False)) for v in data.values()]
+vectorizer = CountVectorizer(token_pattern=r'\b\w+\b')
+vectorizer.fit(texts)
+X = vectorizer.transform(texts)
 
-import pandas as pd
+tfidf_transformer = TfidfTransformer()
+tfidf_transformer.fit(X.toarray())
 
-# create pandas DataFrame with tf-idf scores: Term-Document Matrix
-df_tf_idf = pd.DataFrame(tf_idf_scores.T.todense(), index = feature_names, columns = corpus_index)
-print(df_tf_idf)
+id_to_text = vectorizer.get_feature_names_out()
+print(id_to_text,type(id_to_text),id_to_text.shape)
+
+tfidf = tfidf_transformer.transform(X).toarray()
+data = []
+for i in range(len(tfidf)):
+    row = [id for id,tfidf_ in enumerate(tfidf[i]) if tfidf_>0.2]
+    data.append(row)
+for id in data[0]:
+    print(id_to_text[id])
