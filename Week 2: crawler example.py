@@ -12,4 +12,4 @@ for tag in tagsOfA:
     tagClass=tag.get('class')
     if(tagClass!=['post-title-link']):
         continue
-    print(f'標題:{tagTitle}，連結:https://peienwu.com{tagLink}。')
+    print(f'Title:{tagTitle}，Link:https://peienwu.com{tagLink}。')
