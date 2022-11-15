@@ -33,3 +33,18 @@
 台北市 LOC
 台北 LOC
 市政府 ns
+加拿大 LOC
+卑詩省 LOC
+溫哥華 LOC
+史都華 PER
+沈觀健 PER
+香港 LOC
+胎死腹中 
+教育局 nt
+素人 n
+打滾 v
+商界 n
+雪恥 v
+張理瑲 PER 
+吳權益 PER
+台灣 LOC
