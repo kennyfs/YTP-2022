@@ -3,7 +3,7 @@ import discord
 from dotenv import load_dotenv
 
 load_dotenv()
-TOKEN = os.getenv("MTA2OTkzNjUyMTA2ODY5NTYwMg.G1pjdV.ioqYUlLD7StkxXo0e6YNM3wTFkkkCRaoIFobRI")
+TOKEN = os.getenv("TOKEN")
 
 
 intents = discord.Intents.default()
@@ -22,6 +22,8 @@ async def on_message(message):
     if message.content == 'amogus' :
         await message.channel.send('sus')
     if message.content == '>news' :
-        await message.channel.send('No news for you, bitch')
+        with open('c:/Users/Astrayt.DESKTOP-S6089ME/Desktop/YTP-2022/DC_Bot/tfidf_example.jpg', 'rb') as f:
+            picture = discord.File(f)
+            await message.channel.send(file=picture)
 
-client.run("MTA2OTkzNjUyMTA2ODY5NTYwMg.G1pjdV.ioqYUlLD7StkxXo0e6YNM3wTFkkkCRaoIFobRI")
+client.run("TOKEN")
