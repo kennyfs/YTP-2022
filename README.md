@@ -5,6 +5,8 @@
 指導老師：師大科技系蔡芸琤老師  
 指導業師：精誠科技 (誠志)  
 
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+
 # YTP專題實作想法
 
 ## 主題選擇
@@ -28,10 +30,10 @@
 * AI，讀取文字後輸出圖，可能是用簡單的GraphRNN做監督式學習，或用其他我來沒看過的東西
 
 ## 每週進度
-|週次|主題|成果|
-|---|---|---|
-|1|GitHub & VSCode 開發環境安裝與設定|**待補**|
-|2|爬蟲|[範例程式](https://github.com/kennychenfs/YTP-2022/blob/main/Week%202:%20%E7%88%AC%E8%9F%B2.py)|
+| 週次 | 主題                               | 成果                                                                                            |
+| ---- | ---------------------------------- | ----------------------------------------------------------------------------------------------- |
+| 1    | GitHub & VSCode 開發環境安裝與設定 | **待補**                                                                                        |
+| 2    | 爬蟲                               | [範例程式](https://github.com/kennychenfs/YTP-2022/blob/main/Week%202:%20%E7%88%AC%E8%9F%B2.py) |
 
 ## Todo
 抓取新聞文字：  

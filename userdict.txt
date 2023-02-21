@@ -15,9 +15,6 @@
 黃珊珊 PER
 陳時中 PER
 吳思瑤 PER
-美國 LOC
-德國 LOC
-中國 LOC
 陳建仁 PER
 高雄 100 LOC
 鳳山區 LOC
@@ -28,7 +25,6 @@
 葉思延 PER
 台北 100 LOC
 市政府 ns
-加拿大 LOC
 卑詩省 LOC
 溫哥華 LOC
 史都華 PER
