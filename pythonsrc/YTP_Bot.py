@@ -2,10 +2,10 @@ import os
 import discord
 from dotenv import load_dotenv
 
-imagePath = "c:/Users/Astrayt.DESKTOP-S6089ME/Desktop/YTP-2022/output.jpg"  # default path on someone's computer
+imagePath = "c:/Users/Astrayt.DESKTOP-S6089ME/Desktop/YTP-2022/"  # default path on someone's computer
 
 
-if __name__ == "__main__":
+def run(imageFile):
     load_dotenv()
     TOKEN = os.getenv("TOKEN")
 
@@ -26,7 +26,7 @@ if __name__ == "__main__":
             await message.channel.send("sus")
         if message.content == ">news":
             with open(
-                imagePath,
+                imagePath + imageFile,
                 "rb",
             ) as f:
                 picture = discord.File(f)

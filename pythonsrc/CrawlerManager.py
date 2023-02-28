@@ -1,7 +1,7 @@
 import json
 from datetime import timedelta
 
-import CrawlerCNA
+from . import CrawlerCNA
 
 
 class CrawlerManager:
