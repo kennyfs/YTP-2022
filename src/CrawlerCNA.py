@@ -1,5 +1,7 @@
 import collections
+import random
 import re
+import time
 
 import requests
 from bs4 import BeautifulSoup
@@ -87,6 +89,7 @@ class CrawlerCNA:
         for i, id in enumerate(news_list):
             result[id] = self.get_page(id)
             print(f"getting news {i+1}/{len(news_list)}")
+            time.sleep(random.randint(3, 8))
         return result
 
     @staticmethod
@@ -130,6 +133,7 @@ class CrawlerCNA:
             length += 1
             if maxpage != 0 and length == maxpage:
                 break
+            time.sleep(random.randint(3, 8))
         return result
 
 

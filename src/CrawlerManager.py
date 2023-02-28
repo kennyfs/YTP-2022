@@ -1,5 +1,5 @@
 import json
-from datetime import date, timedelta
+from datetime import timedelta
 
 import CrawlerCNA
 

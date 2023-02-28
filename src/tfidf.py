@@ -1,11 +1,12 @@
 import itertools
 import json
-import numpy as np
-from sklearn.feature_extraction.text import TfidfVectorizer
+
 import jieba  # ldkrsi/jieba-zh_TW for traditional Chinese
-from scipy.spatial import distance
-import networkx as nx
 import matplotlib.pyplot as plt
+import networkx as nx
+import numpy as np
+from scipy.spatial import distance
+from sklearn.feature_extraction.text import TfidfVectorizer
 
 SHOW = False
 data = json.loads(open("cna-category-aipl(example).json", "r").read())
@@ -14,10 +15,10 @@ with open("stopwords.txt", "r") as f:
     stopwords = [word.strip("\n ") for word in f.readlines()]
 texts = []
 for v in data.values():
-    cut_result = jieba.cut(v["text"].lower(), cut_all=False)
+    cutResult = jieba.cut(v["text"].lower(), cut_all=False)
 
-    cut_result = filter(lambda x: x not in stopwords, cut_result)
-    texts.append(" ".join(cut_result))
+    cutResult = filter(lambda x: x not in stopwords, cutResult)
+    texts.append(" ".join(cutResult))
 """
 需要觀察分詞結果來加入字典時，可以用這個輸出
 with open('cut result.txt', 'w') as f:
@@ -28,62 +29,54 @@ vectorizer = TfidfVectorizer(norm=None)
 vectorizer.fit(texts)
 tfidf = vectorizer.fit_transform(texts).toarray()
 
-id_to_text = vectorizer.get_feature_names_out()
-print(id_to_text, type(id_to_text), id_to_text.shape)
-
-print(tfidf.shape)
-word_cnt = {}
+idToText = vectorizer.get_feature_names_out()
+wordCnt = {}
 for news in texts:
     for word in news.split(" "):
-        if word not in word_cnt:
-            word_cnt[word] = 1
+        if word not in wordCnt:
+            wordCnt[word] = 1
         else:
-            word_cnt[word] += 1
+            wordCnt[word] += 1
         # print(word)
 data = []
 for i in range(len(tfidf)):
     row = []
     for id, tfidf_ in enumerate(tfidf[i]):
-        # print(id,id_to_text[id])
-        # print(word_cnt.get(id_to_text[id],0))
-        # print(id_to_text[id], tfidf_, word_cnt.get(id_to_text[id],0))
-        if tfidf_ > 10 and word_cnt.get(id_to_text[id], 0) >= 30:
-            row.append(id_to_text[id])
+        if tfidf_ > 10 and wordCnt.get(idToText[id], 0) >= 40:
+            row.append(idToText[id])
 
     data.append(row)
-id_to_text = {}
-text_to_id = {}
+idToText = {}
+textToId = {}
 for news in data:
     for word in news:
-        if word not in text_to_id:
-            text_to_id[word] = len(text_to_id)
-            id_to_text[len(text_to_id) - 1] = word
-print(id_to_text)
+        if word not in textToId:
+            textToId[word] = len(textToId)
+            idToText[len(textToId) - 1] = word
 
 combinations = [list(itertools.combinations(news, 2)) for news in data]
-combination_matrix = np.zeros((len(id_to_text), len(id_to_text)))
-for tweet_comb in combinations:
-    for comb in tweet_comb:
-        combination_matrix[text_to_id[comb[0]], text_to_id[comb[1]]] += 1
-        combination_matrix[text_to_id[comb[1]], text_to_id[comb[0]]] += 1
+combinationMatrix = np.zeros((len(idToText), len(idToText)))
+for newsComb in combinations:
+    for comb in newsComb:
+        combinationMatrix[textToId[comb[0]], textToId[comb[1]]] += 1
+        combinationMatrix[textToId[comb[1]], textToId[comb[0]]] += 1
 
-for i in range(len(id_to_text)):
-    combination_matrix[i, i] /= 2
-
-jaccard_matrix = 1 - distance.cdist(combination_matrix, combination_matrix, "jaccard")
+for i in range(len(idToText)):
+    combinationMatrix[i, i] /= 2
+jaccardMatrix = 1 - distance.cdist(combinationMatrix, combinationMatrix, "jaccard")
 
 nodes = []
 
-for i in range(len(id_to_text)):
-    for j in range(i + 1, len(id_to_text)):
-        jaccard = jaccard_matrix[i, j]
+for i in range(len(idToText)):
+    for j in range(i + 1, len(idToText)):
+        jaccard = jaccardMatrix[i, j]
         if jaccard > 0:
             nodes.append(
                 [
-                    id_to_text[i],
-                    id_to_text[j],
-                    word_cnt[id_to_text[i]],
-                    word_cnt[id_to_text[j]],
+                    idToText[i],
+                    idToText[j],
+                    wordCnt[idToText[i]],
+                    wordCnt[idToText[j]],
                     jaccard,
                 ]
             )
@@ -92,30 +85,40 @@ G = nx.Graph()
 G.nodes(data=True)
 
 for pair in nodes:
-    node_x, node_y, node_x_cnt, node_y_cnt, jaccard = (
+    nodeX, nodeY, nodeXCnt, nodeYCnt, jaccard = (
         pair[0],
         pair[1],
         pair[2],
         pair[3],
         pair[4],
     )
-    if not G.has_node(node_x):
-        G.add_node(node_x, count=node_x_cnt)
-    if not G.has_node(node_y):
-        G.add_node(node_y, count=node_y_cnt)
-    if not G.has_edge(node_x, node_y):
-        G.add_edge(node_x, node_y, weight=jaccard)
-plt.rcParams["font.sans-serif"] = ["AR PL UMing CN"]
-plt.figure(figsize=(15, 15))
+    if not G.has_node(nodeX):
+        G.add_node(nodeX, count=nodeXCnt)
+    if not G.has_node(nodeY):
+        G.add_node(nodeY, count=nodeYCnt)
+    if not G.has_edge(nodeX, nodeY):
+        G.add_edge(nodeX, nodeY, weight=jaccard)
+plt.figure(figsize=(15, 15), dpi=150)
+nodeCount = [d["count"] for (n, d) in G.nodes(data=True)]
+count75percent = np.percentile(nodeCount, 75)
+nodeSize = [d * 10 for d in nodeCount]
+degree = [d for (n, d) in nx.degree(G)]
+degree75percent = np.percentile(degree, 75)
+nodeColor = []
+for i, (n, d) in enumerate(G.nodes(data=True)):
+    if d["count"] > count75percent and degree[i] >= degree75percent:
+        nodeColor.append("#c94dff")
+    elif d["count"] > count75percent:
+        nodeColor.append("#ff7878")
+    elif degree[i] > degree75percent:
+        nodeColor.append("#7895ff")
+    else:
+        nodeColor.append("cyan")
 pos = nx.spring_layout(G, k=0.5, iterations=1000)
-
-node_size = [d["count"] * 10 for (n, d) in G.nodes(data=True)]
-nx.draw_networkx_nodes(G, pos, node_color="cyan", alpha=1.0, node_size=node_size)
+nx.draw_networkx_nodes(G, pos, node_color=nodeColor, alpha=1.0, node_size=nodeSize)
 nx.draw_networkx_labels(G, pos, font_family="AR PL UMing CN")
-
-edge_width = [d["weight"] * 10 for (u, v, d) in G.edges(data=True)]
-nx.draw_networkx_edges(G, pos, alpha=0.4, edge_color="black", width=edge_width)
-
+edgeWidth = [d["weight"] * 10 for (u, v, d) in G.edges(data=True)]
+nx.draw_networkx_edges(G, pos, alpha=0.4, edge_color="black", width=edgeWidth)
 if SHOW:
     plt.show()
 else:

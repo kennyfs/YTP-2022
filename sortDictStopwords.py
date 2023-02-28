@@ -23,7 +23,19 @@ def appendDict(key, weight=None, part=None):
 if sortStopwords:
     with open("stopwords.txt", "r") as f:
         stopwords = list(set([word.strip("\n ") for word in f.readlines()]))
-    stopwords.sort(key=lambda x: len(x))
+    byLen = []
+    maxLength = 0
+    for word in stopwords:
+        if len(word) > maxLength:
+            maxLength = len(word)
+        while len(byLen) <= len(word):
+            byLen.append([])
+        byLen[len(word)].append(word)
+    for i in range(len(byLen)):
+        byLen[i].sort()
+    stopwords = []
+    for i in range(len(byLen)):
+        stopwords.extend(byLen[i])
     with open("stopwords.txt", "w") as f:
         f.write("\n".join(stopwords))
 dict = {}
