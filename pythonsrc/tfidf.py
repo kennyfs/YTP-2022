@@ -99,10 +99,10 @@ def getImage(jsonFile, imageFile):
             G.add_node(nodeY, count=nodeYCnt)
         if not G.has_edge(nodeX, nodeY):
             G.add_edge(nodeX, nodeY, weight=jaccard)
-    plt.figure(figsize=(15, 15), dpi=150)
+    plt.figure(figsize=(15, 15), dpi=180)
     nodeCount = [d["count"] for (n, d) in G.nodes(data=True)]
     count75percent = np.percentile(nodeCount, 75)
-    nodeSize = [d * 10 for d in nodeCount]
+    nodeSize = [d * 25 for d in nodeCount]
     degree = [d for (n, d) in nx.degree(G)]
     degree75percent = np.percentile(degree, 75)
     nodeColor = []
@@ -117,7 +117,11 @@ def getImage(jsonFile, imageFile):
             nodeColor.append("cyan")
     pos = nx.spring_layout(G, k=0.5, iterations=1000)
     nx.draw_networkx_nodes(G, pos, node_color=nodeColor, alpha=1.0, node_size=nodeSize)
-    nx.draw_networkx_labels(G, pos, font_family="AR PL UMing CN")
+    nx.draw_networkx_labels(G, pos, font_size=18, font_family="AR PL UMing CN")
     edgeWidth = [d["weight"] * 10 for (u, v, d) in G.edges(data=True)]
     nx.draw_networkx_edges(G, pos, alpha=0.4, edge_color="black", width=edgeWidth)
     plt.savefig(imageFile)
+
+
+if __name__ == "__main__":
+    getImage("cna-category-aipl(example).json", "aipl.jpg")
