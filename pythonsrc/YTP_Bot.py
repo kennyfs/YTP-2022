@@ -2,7 +2,7 @@ import os
 import discord
 from dotenv import load_dotenv
 
-imagePath = "~/YTP2022/"  # default path on someone's computer
+imagePath = "/home/astrayt/YTP2022/"  # default path on someone's computer
 
 
 def run(imageFile):
@@ -25,6 +25,7 @@ def run(imageFile):
         if message.content == "amogus":
             await message.channel.send("sus")
         if message.content == ">news":
+            await message.channel.send("本日新聞統整")
             with open(
                 imagePath + imageFile,
                 "rb",
