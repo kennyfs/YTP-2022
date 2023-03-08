@@ -2,7 +2,7 @@ import os
 import discord
 from dotenv import load_dotenv
 
-imagePath = "c:/Users/Astrayt.DESKTOP-S6089ME/Desktop/YTP-2022/"  # default path on someone's computer
+imagePath = "~/YTP2022/"  # default path on someone's computer
 
 
 def run(imageFile):
