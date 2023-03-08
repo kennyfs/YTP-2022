@@ -120,4 +120,4 @@ def getImage(jsonFile, imageFile):
     nx.draw_networkx_labels(G, pos, font_family="AR PL UMing CN")
     edgeWidth = [d["weight"] * 10 for (u, v, d) in G.edges(data=True)]
     nx.draw_networkx_edges(G, pos, alpha=0.4, edge_color="black", width=edgeWidth)
-    plt.savefig(imageName)
+    plt.savefig(imageFile)
