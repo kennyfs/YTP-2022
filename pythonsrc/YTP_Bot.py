@@ -27,7 +27,7 @@ def run(imageFile):
         if message.content == ">news":
             await message.channel.send("本日新聞統整")
             with open(
-                imagePath + imageFile,
+                imageFile,
                 "rb",
             ) as f:
                 picture = discord.File(f)
